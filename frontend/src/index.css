@@ -1,0 +1,484 @@
+@import "tailwindcss";
+
+/* ================================================================
+   EduCore — Full Color Palette
+   Tailwind 4.0 @theme block
+   File: src/globals.css
+   
+   Generated utility classes (examples):
+     bg-dark-bg          text-dark-text       border-dark-border
+     bg-light-surface2   text-light-muted2    border-light-border2
+     bg-accent           text-accent-pink     shadow-glow
+     bg-score-high       text-score-mid       rounded-card
+     bg-admin            text-teacher         bg-student
+   ================================================================ */
+
+@theme {
+  /* ──────────────────────────────────────────
+     SECTION 1 — ACCENT / BRAND COLORS
+     These are SHARED across dark & light mode.
+     Use: bg-accent, text-accent-pink, etc.
+  ────────────────────────────────────────── */
+
+  --color-accent: #7c6fff; /* Purple  — Admin / Primary   */
+  --color-accent-hover: #9b8fff; /* Purple hover state           */
+  --color-accent-active: #6355e0; /* Purple pressed state         */
+
+  --color-accent-pink: #ff6b8a; /* Pink    — Teacher / Danger   */
+  --color-accent-pink-hover: #ff9ab0; /* Pink hover                   */
+
+  --color-accent-teal: #3dd9a4; /* Teal    — Student / Success  */
+  --color-accent-teal-hover: #5fe8b8; /* Teal hover                   */
+
+  --color-accent-amber: #f9a825; /* Amber   — Warning            */
+  --color-accent-amber-hover: #fbbf45; /* Amber hover                  */
+
+  --color-accent-sky: #38bdf8; /* Sky     — Info               */
+  --color-accent-sky-hover: #60cdfa; /* Sky hover                    */
+
+  --color-accent-lavender: #a78bfa; /* Lavender — Secondary accent  */
+
+  /* ──────────────────────────────────────────
+     SECTION 2 — PORTAL IDENTITY COLORS
+     Semantic aliases for each portal role.
+     Use: bg-admin, text-teacher, bg-student
+  ────────────────────────────────────────── */
+
+  --color-admin: #7c6fff; /* Admin   portal accent        */
+  --color-admin-muted: rgba(124, 111, 255, 0.12);
+  --color-admin-border: rgba(124, 111, 255, 0.25);
+
+  --color-teacher: #ff6b8a; /* Teacher portal accent        */
+  --color-teacher-muted: rgba(255, 107, 138, 0.12);
+  --color-teacher-border: rgba(255, 107, 138, 0.25);
+
+  --color-student: #3dd9a4; /* Student portal accent        */
+  --color-student-muted: rgba(61, 217, 164, 0.12);
+  --color-student-border: rgba(61, 217, 164, 0.25);
+
+  /* ──────────────────────────────────────────
+     SECTION 3 — DARK THEME SURFACES
+     Use: bg-dark-bg, bg-dark-surface, etc.
+  ────────────────────────────────────────── */
+
+  --color-dark-bg: #09090f; /* Page background              */
+  --color-dark-surface: #111119; /* Cards, sidebar               */
+  --color-dark-surface-2: #18181f; /* Input backgrounds            */
+  --color-dark-surface-3: #222230; /* Hover states, progress track */
+  --color-dark-surface-4: #2a2a3a; /* Elevated elements            */
+
+  --color-dark-text: #eeeef5; /* Primary text                 */
+  --color-dark-text-2: #c8c8d8; /* Secondary text               */
+  --color-dark-muted: #5a5a7a; /* Placeholder / disabled text  */
+  --color-dark-muted-2: #8888aa; /* Labels, captions             */
+
+  --color-dark-border: rgba(255, 255, 255, 0.07); /* Default border    */
+  --color-dark-border-2: rgba(255, 255, 255, 0.13); /* Hover border      */
+  --color-dark-border-3: rgba(255, 255, 255, 0.2); /* Active border     */
+
+  --color-dark-topbar: rgba(9, 9, 15, 0.88); /* Topbar glass      */
+  --color-dark-overlay: rgba(0, 0, 0, 0.6); /* Modal backdrop    */
+
+  /* ──────────────────────────────────────────
+     SECTION 4 — LIGHT THEME SURFACES
+     Use: bg-light-bg, text-light-text, etc.
+  ────────────────────────────────────────── */
+
+  --color-light-bg: #f0f2f8; /* Page background              */
+  --color-light-surface: #ffffff; /* Cards, sidebar               */
+  --color-light-surface-2: #f5f6fb; /* Input backgrounds            */
+  --color-light-surface-3: #e8eaf4; /* Hover states, progress track */
+  --color-light-surface-4: #dde0ef; /* Elevated elements            */
+
+  --color-light-text: #1a1a2e; /* Primary text                 */
+  --color-light-text-2: #2e2e48; /* Secondary text               */
+  --color-light-muted: #9090b0; /* Placeholder / disabled text  */
+  --color-light-muted-2: #60607a; /* Labels, captions             */
+
+  --color-light-border: rgba(0, 0, 0, 0.08); /* Default border    */
+  --color-light-border-2: rgba(0, 0, 0, 0.14); /* Hover border      */
+  --color-light-border-3: rgba(0, 0, 0, 0.22); /* Active border     */
+
+  --color-light-topbar: rgba(255, 255, 255, 0.92); /* Topbar glass      */
+  --color-light-overlay: rgba(0, 0, 0, 0.5); /* Modal backdrop    */
+
+  /* ──────────────────────────────────────────
+     SECTION 5 — SCORE / GRADE COLORS
+     Use: bg-score-high, text-score-mid, etc.
+  ────────────────────────────────────────── */
+
+  --color-score-high: #3dd9a4; /* 85%+ — Excellent / A         */
+  --color-score-mid: #7c6fff; /* 70–84% — Good / B            */
+  --color-score-low: #f9a825; /* 55–69% — Average / C         */
+  --color-score-fail: #ff6b8a; /* <55% — Fail / F              */
+
+  --color-score-high-muted: rgba(61, 217, 164, 0.12);
+  --color-score-mid-muted: rgba(124, 111, 255, 0.12);
+  --color-score-low-muted: rgba(249, 168, 37, 0.12);
+  --color-score-fail-muted: rgba(255, 107, 138, 0.12);
+
+  /* ──────────────────────────────────────────
+     SECTION 6 — ATTENDANCE STATUS COLORS
+     Use: bg-att-present, text-att-absent, etc.
+  ────────────────────────────────────────── */
+
+  --color-att-present: #3dd9a4; /* Present                      */
+  --color-att-absent: #ff6b8a; /* Absent                       */
+  --color-att-late: #f9a825; /* Late                         */
+  --color-att-holiday: #38bdf8; /* Holiday / Off                */
+  --color-att-excused: #a78bfa; /* Excused absence              */
+
+  --color-att-present-muted: rgba(61, 217, 164, 0.12);
+  --color-att-absent-muted: rgba(255, 107, 138, 0.12);
+  --color-att-late-muted: rgba(249, 168, 37, 0.12);
+  --color-att-holiday-muted: rgba(56, 189, 248, 0.12);
+
+  /* ──────────────────────────────────────────
+     SECTION 7 — SEMANTIC STATUS COLORS
+     Use: bg-success, text-warning, bg-danger
+  ────────────────────────────────────────── */
+
+  --color-success: #3dd9a4;
+  --color-success-muted: rgba(61, 217, 164, 0.12);
+  --color-success-border: rgba(61, 217, 164, 0.25);
+
+  --color-warning: #f9a825;
+  --color-warning-muted: rgba(249, 168, 37, 0.12);
+  --color-warning-border: rgba(249, 168, 37, 0.25);
+
+  --color-danger: #ff6b8a;
+  --color-danger-muted: rgba(255, 107, 138, 0.12);
+  --color-danger-border: rgba(255, 107, 138, 0.25);
+
+  --color-info: #38bdf8;
+  --color-info-muted: rgba(56, 189, 248, 0.12);
+  --color-info-border: rgba(56, 189, 248, 0.25);
+
+  --color-neutral: #8888aa;
+  --color-neutral-muted: rgba(136, 136, 170, 0.12);
+  --color-neutral-border: rgba(136, 136, 170, 0.25);
+
+  /* ──────────────────────────────────────────
+     SECTION 8 — GRADIENTS
+     Use as background-image in CSS when needed.
+     Referenced via CSS variable in components.
+  ────────────────────────────────────────── */
+
+  --color-gradient-brand-from: #7c6fff;
+  --color-gradient-brand-to: #ff6b8a;
+
+  --color-gradient-success-from: #7c6fff;
+  --color-gradient-success-to: #3dd9a4;
+
+  --color-gradient-warm-from: #ff6b8a;
+  --color-gradient-warm-to: #f9a825;
+
+  --color-gradient-cool-from: #38bdf8;
+  --color-gradient-cool-to: #3dd9a4;
+
+  /* ──────────────────────────────────────────
+     SECTION 9 — GLOW / SHADOW COLORS
+     Use: shadow-glow, shadow-pink, shadow-teal
+  ────────────────────────────────────────── */
+
+  --color-glow: rgba(124, 111, 255, 0.18);
+  --color-glow-pink: rgba(255, 107, 138, 0.18);
+  --color-glow-teal: rgba(61, 217, 164, 0.18);
+  --color-glow-amber: rgba(249, 168, 37, 0.18);
+  --color-glow-sky: rgba(56, 189, 248, 0.18);
+
+  --shadow-glow: 0 4px 20px rgba(124, 111, 255, 0.18);
+  --shadow-glow-pink: 0 4px 20px rgba(255, 107, 138, 0.18);
+  --shadow-glow-teal: 0 4px 20px rgba(61, 217, 164, 0.18);
+  --shadow-glow-sm: 0 2px 10px rgba(124, 111, 255, 0.14);
+  --shadow-glow-lg: 0 8px 32px rgba(124, 111, 255, 0.24);
+
+  --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.2);
+  --shadow-card-hover: 0 8px 28px rgba(0, 0, 0, 0.3);
+  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.5);
+  --shadow-topbar: 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  /* ──────────────────────────────────────────
+     SECTION 10 — BORDER RADIUS
+     Use: rounded-card, rounded-btn, rounded-badge
+  ────────────────────────────────────────── */
+
+  --radius-card: 14px;
+  --radius-card-lg: 18px;
+  --radius-card-sm: 10px;
+  --radius-btn: 10px;
+  --radius-btn-sm: 8px;
+  --radius-badge: 20px;
+  --radius-input: 10px;
+  --radius-icon: 11px;
+  --radius-icon-sm: 8px;
+  --radius-avatar: 9999px;
+  --radius-sidebar: 12px;
+  --radius-modal: 16px;
+  --radius-chip: 6px;
+  --radius-progress: 10px;
+
+  /* ──────────────────────────────────────────
+     SECTION 11 — SPACING & LAYOUT
+     Use: w-sidebar, h-topbar
+  ────────────────────────────────────────── */
+
+  --spacing-rolecard-h: 370px;
+  --spacing-rolecard-h-md: 400px;
+  --spacing-rolecard-w: 2px;
+  --spacing-rolecard-w-md: 256px;
+  --spacing-loginbox-h: 600px;
+  --spacing-loginbox-w: 500px;
+  --spacing-main-p: 24px;
+  --spacing-main-m: 20px;
+  --spacing-special-p: 30px;
+  --spacing-special-m: 23px;
+  --spacing-admin-register-box-h: 900px;
+  --spacing-admin-register-box-w: 500px;
+  --spacing-useraddcard-max-w: 800px;
+  --spacing-sidebar: 234px;
+  --spacing-sidebar-sm: 220px;
+  --spacing-topbar: 60px;
+  --spacing-page-x: 24px;
+  --spacing-page-y: 22px;
+  --spacing-card-gap: 18px;
+  --spacing-grid-gap: 14px;
+
+  /* ──────────────────────────────────────────
+     SECTION 12 — TYPOGRAPHY
+     Use: font-sans (already Tailwind default),
+     or use these as CSS vars in components.
+  ────────────────────────────────────────── */
+
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --font-size-xs: 0.67rem; /* 10.7px — labels, uppercase   */
+  --font-size-sm: 0.72rem; /* 11.5px — captions, meta      */
+  --font-size-base: 0.84rem; /* 13.4px — body text           */
+  --font-size-md: 0.9rem; /* 14.4px — card titles         */
+  --font-size-lg: 1rem; /* 16px   — section headings    */
+  --font-size-xl: 1.15rem; /* 18.4px — page headings       */
+  --font-size-2xl: 1.5rem; /* 24px   — hero numbers        */
+  --font-size-3xl: 1.7rem; /* 27.2px — stat card numbers   */
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  --letter-spacing-label: 0.08em;
+  --letter-spacing-badge: 0.04em;
+  --letter-spacing-heading: -0.02em;
+  --letter-spacing-stat: -0.04em;
+
+  /* ──────────────────────────────────────────
+     SECTION 13 — TRANSITION & ANIMATION
+  ────────────────────────────────────────── */
+
+  --transition-fast: all 0.15s ease;
+  --transition-base: all 0.2s ease;
+  --transition-slow: all 0.35s ease;
+  --transition-progress: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-counter: 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --animate-fade-up: fadeUp 0.35s ease both;
+  --animate-slide-in: slideIn 0.3s ease both;
+}
+
+/* ================================================================
+   CSS CUSTOM PROPERTIES FOR THEME SWITCHING
+   These are applied at the :root / body level.
+   In React, toggle class="dark" or class="light" on <body>.
+   
+   Usage in components:
+     bg-[var(--bg)]          → current theme background
+     text-[var(--text)]      → current theme text
+     border-[var(--border)]  → current theme border
+================================================================ */
+
+.dark {
+  --bg: var(--color-dark-bg);
+  --surface: var(--color-dark-surface);
+  --surface-2: var(--color-dark-surface-2);
+  --surface-3: var(--color-dark-surface-3);
+  --surface-4: var(--color-dark-surface-4);
+  --text: var(--color-dark-text);
+  --text-2: var(--color-dark-text-2);
+  --muted: var(--color-dark-muted);
+  --muted-2: var(--color-dark-muted-2);
+  --border: var(--color-dark-border);
+  --border-2: var(--color-dark-border-2);
+  --border-3: var(--color-dark-border-3);
+  --topbar-bg: var(--color-dark-topbar);
+  --overlay: var(--color-dark-overlay);
+}
+
+:root {
+  --bg: var(--color-light-bg);
+  --surface: var(--color-light-surface);
+  --surface-2: var(--color-light-surface-2);
+  --surface-3: var(--color-light-surface-3);
+  --surface-4: var(--color-light-surface-4);
+  --text: var(--color-light-text);
+  --text-2: var(--color-light-text-2);
+  --muted: var(--color-light-muted);
+  --muted-2: var(--color-light-muted-2);
+  --border: var(--color-light-border);
+  --border-2: var(--color-light-border-2);
+  --border-3: var(--color-light-border-3);
+  --topbar-bg: var(--color-light-topbar);
+  --overlay: var(--color-light-overlay);
+}
+
+/* ================================================================
+   KEYFRAME ANIMATIONS
+================================================================ */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(124, 111, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(124, 111, 255, 0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ================================================================
+   UTILITY CLASSES
+   (Global helpers — not Tailwind-generated)
+================================================================ */
+
+/* Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-3) transparent;
+}
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-3);
+  border-radius: 10px;
+}
+
+/* Gradient backgrounds */
+.bg-gradient-brand {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent),
+    var(--color-accent-pink)
+  );
+}
+.bg-gradient-success {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent),
+    var(--color-accent-teal)
+  );
+}
+.bg-gradient-warm {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-pink),
+    var(--color-accent-amber)
+  );
+}
+.bg-gradient-cool {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-sky),
+    var(--color-accent-teal)
+  );
+}
+
+/* Gradient text */
+.text-gradient-brand {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent),
+    var(--color-accent-pink)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glassmorphism topbar */
+.glass {
+  background: var(--topbar-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-2) 25%,
+    var(--surface-3) 50%,
+    var(--surface-2) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-chip);
+}
+
+/* Progress bar fill animations */
+.progress-fill {
+  transition: var(--transition-progress);
+}
+
+/* Stat card counter animation */
+.counter {
+  animation: var(--animate-fade-up);
+}
