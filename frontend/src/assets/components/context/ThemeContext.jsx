@@ -2,30 +2,29 @@ import { createContext, useEffect, useState } from "react";
 
 export const ThemeContext = createContext();
 
-export const themeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("EduCore_theme") || "light";
+  });
 
-  const exsitingTheme = localStorage.getItem("EduCore_theme");
-
-  if (exsitingTheme) return exsitingTheme;
-
-  const body = document.body;
+  const root = window.document.documentElement;
 
   useEffect(() => {
-    if (body.contains("")) {
-      body.classList.add("dark");
-    } else {
-      body.classList.remove("dark");
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else if (theme === "light") {
+      root.classList.remove("dark");
     }
+
+    localStorage.setItem("EduCore_theme", theme);
   }, [theme]);
 
-  let toggoleButton = () => {
+  let toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
-    localStorage.setItem("EduCore_theme", theme);
   };
 
   return (
-    <ThemeContext.Provider value={{ toggoleButton, theme }}>
+    <ThemeContext.Provider value={{ toggleTheme, theme }}>
       {children}
     </ThemeContext.Provider>
   );

@@ -3,6 +3,7 @@ import Class from "../models/classModel.js";
 import Student from "../models/studentModel.js";
 import Teacher from "../models/teacherModel.js";
 import { STATUS_CODES } from "../utils/constants.js";
+import Result from "../models/resultModel.js";
 
 export const classAdding = expressAsyncHandler(async (req, res, next) => {
   const {
@@ -86,4 +87,27 @@ export const classAdding = expressAsyncHandler(async (req, res, next) => {
   res
     .status(STATUS_CODES.SUCCESS)
     .json({ success: true, message: "Class added" });
+});
+
+export const deleteClass = expressAsyncHandler(async (req, res) => {
+  const className = req.params.className;
+
+  const _class = await Class.findOne({ className });
+
+  if (!_class) {
+    return res.status(STATUS_CODES.NOT_FOUND).json({
+      success: false,
+      message: "Class not found with given class Name",
+    });
+  }
+
+  if (_class.students.length > 0) {
+    await Student.updateMany({ class: _class._id }, { $set: { class: null } });
+  }
+
+  await Class.findByIdAndDelete(_class.id);
+
+  res
+    .status(STATUS_CODES.SUCCESS)
+    .json({ success: true, message: "Class delete successfully" });
 });

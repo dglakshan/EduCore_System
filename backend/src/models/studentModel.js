@@ -87,7 +87,7 @@ const studentSchema = new mongoose.Schema(
     class: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Class",
-      default: null,
+      required: true,
     },
 
     date_of_birth: {
@@ -95,9 +95,10 @@ const studentSchema = new mongoose.Schema(
       required: [true, "Date of birth is required"],
       validate: {
         validator: function (value) {
+          const enterdDate = new Date(value);
           const nowDate = new Date();
-          nowDate.setFullYear(nowDate.getFullYear() - 18);
-          return value >= nowDate;
+          nowDate.setFullYear(nowDate.getFullYear() - 100);
+          return enterdDate >= nowDate;
         },
         message: "Enter valid Date of birth",
       },
@@ -111,15 +112,6 @@ const studentSchema = new mongoose.Schema(
           return Array.isArray(value) && value.length >= 1;
         },
       },
-    },
-
-    marks: {
-      type: [
-        {
-          subject: { type: String, required: true },
-          score: { type: String, required: true },
-        },
-      ],
     },
 
     status: {
@@ -147,16 +139,15 @@ const studentSchema = new mongoose.Schema(
 studentSchema.index({ grade: 1, status: 1 });
 studentSchema.index({ class: 1 });
 
-studentSchema.pre("save", async function (next) {
-  if (!this.studentId === null) return next();
+studentSchema.pre("save", async function () {
+  if (this.studentId) return;
 
   try {
     const year = new Date().getFullYear();
     const count = await mongoose.model("Student").countDocuments();
     this.studentId = `STU-${year}-${String(count + 1).padStart(3, "0")}`;
-    next();
   } catch (err) {
-    next(err);
+    throw err;
   }
 });
 

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300..500;1,300..500&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 @import "tailwindcss";
 
 /* ================================================================
@@ -14,6 +15,14 @@
    ================================================================ */
 
 @theme {
+  /* FONTS */
+  --font-custom-sans:
+    "Nunito Sans", sans-serif; /* body, paragraphs, inputs, nav links    */
+  --font-custom-display:
+    "Nunito", sans-serif; /* headings, logo, buttons, badges, price */
+  --font-custom-mono:
+    "DM Mono", monospace; /* admin data, IDs, order numbers, stats  */
+
   /* ──────────────────────────────────────────
      SECTION 1 — ACCENT / BRAND COLORS
      These are SHARED across dark & light mode.
@@ -45,65 +54,44 @@
   ────────────────────────────────────────── */
 
   --color-admin: #7c6fff; /* Admin   portal accent        */
-  --color-admin-muted: rgba(124, 111, 255, 0.12);
-  --color-admin-border: rgba(124, 111, 255, 0.25);
+  --color-admin-gradient-from: rgba(124, 111, 255, 0.05);
+  --color-admin-muted: rgba(124, 111, 255, 0.08);
+  --color-admin-border: rgba(124, 111, 255, 0.1);
 
   --color-teacher: #ff6b8a; /* Teacher portal accent        */
-  --color-teacher-muted: rgba(255, 107, 138, 0.12);
+  --color-teacher-gradient-from: rgba(255, 107, 138, 0.05);
+  --color-teacher-muted: rgba(255, 107, 138, 0.08);
   --color-teacher-border: rgba(255, 107, 138, 0.25);
 
   --color-student: #3dd9a4; /* Student portal accent        */
-  --color-student-muted: rgba(61, 217, 164, 0.12);
+  --color-student-gradient-from: rgba(61, 217, 164, 0.05);
+  --color-student-muted: rgba(61, 217, 164, 0.08);
   --color-student-border: rgba(61, 217, 164, 0.25);
 
   /* ──────────────────────────────────────────
-     SECTION 3 — DARK THEME SURFACES
-     Use: bg-dark-bg, bg-dark-surface, etc.
-  ────────────────────────────────────────── */
-
-  --color-dark-bg: #09090f; /* Page background              */
-  --color-dark-surface: #111119; /* Cards, sidebar               */
-  --color-dark-surface-2: #18181f; /* Input backgrounds            */
-  --color-dark-surface-3: #222230; /* Hover states, progress track */
-  --color-dark-surface-4: #2a2a3a; /* Elevated elements            */
-
-  --color-dark-text: #eeeef5; /* Primary text                 */
-  --color-dark-text-2: #c8c8d8; /* Secondary text               */
-  --color-dark-muted: #5a5a7a; /* Placeholder / disabled text  */
-  --color-dark-muted-2: #8888aa; /* Labels, captions             */
-
-  --color-dark-border: rgba(255, 255, 255, 0.07); /* Default border    */
-  --color-dark-border-2: rgba(255, 255, 255, 0.13); /* Hover border      */
-  --color-dark-border-3: rgba(255, 255, 255, 0.2); /* Active border     */
-
-  --color-dark-topbar: rgba(9, 9, 15, 0.88); /* Topbar glass      */
-  --color-dark-overlay: rgba(0, 0, 0, 0.6); /* Modal backdrop    */
-
-  /* ──────────────────────────────────────────
-     SECTION 4 — LIGHT THEME SURFACES
+     SECTION 3 — LIGHT THEME AND DARK THEME SURFACES
      Use: bg-light-bg, text-light-text, etc.
   ────────────────────────────────────────── */
+  --color-bg: var(--bg); /* Page background              */
+  --color-surface: var(--surface); /* Cards, sidebar               */
+  --color-surface-2: var(--surface-2); /* Input backgrounds            */
+  --color-surface-3: var(--surface-3); /* Hover states, progress track */
+  --color-surface-4: var(--surface-4); /* Elevated elements            */
 
-  --color-light-bg: #f0f2f8; /* Page background              */
-  --color-light-surface: #ffffff; /* Cards, sidebar               */
-  --color-light-surface-2: #f5f6fb; /* Input backgrounds            */
-  --color-light-surface-3: #e8eaf4; /* Hover states, progress track */
-  --color-light-surface-4: #dde0ef; /* Elevated elements            */
+  --color-text: var(--text); /* Primary text                 */
+  --color-text-2: var(--text-2); /* Secondary text               */
+  --color-muted: var(--muted); /* Placeholder / disabled text  */
+  --color-muted-2: var(--muted-2); /* Labels, captions             */
 
-  --color-light-text: #1a1a2e; /* Primary text                 */
-  --color-light-text-2: #2e2e48; /* Secondary text               */
-  --color-light-muted: #9090b0; /* Placeholder / disabled text  */
-  --color-light-muted-2: #60607a; /* Labels, captions             */
+  --color-border: var(--border); /* Default border    */
+  --color-border-2: var(--border-2); /* Hover border      */
+  --color-border-3: var(--border-3); /* Active border     */
 
-  --color-light-border: rgba(0, 0, 0, 0.08); /* Default border    */
-  --color-light-border-2: rgba(0, 0, 0, 0.14); /* Hover border      */
-  --color-light-border-3: rgba(0, 0, 0, 0.22); /* Active border     */
-
-  --color-light-topbar: rgba(255, 255, 255, 0.92); /* Topbar glass      */
-  --color-light-overlay: rgba(0, 0, 0, 0.5); /* Modal backdrop    */
+  --color-topbar: var(--topbar-bg); /* Topbar glass      */
+  --color-overlay: var(--overlay); /* Modal backdrop    */
 
   /* ──────────────────────────────────────────
-     SECTION 5 — SCORE / GRADE COLORS
+     SECTION 4 — SCORE / GRADE COLORS
      Use: bg-score-high, text-score-mid, etc.
   ────────────────────────────────────────── */
 
@@ -118,7 +106,7 @@
   --color-score-fail-muted: rgba(255, 107, 138, 0.12);
 
   /* ──────────────────────────────────────────
-     SECTION 6 — ATTENDANCE STATUS COLORS
+     SECTION 5 — ATTENDANCE STATUS COLORS
      Use: bg-att-present, text-att-absent, etc.
   ────────────────────────────────────────── */
 
@@ -134,7 +122,7 @@
   --color-att-holiday-muted: rgba(56, 189, 248, 0.12);
 
   /* ──────────────────────────────────────────
-     SECTION 7 — SEMANTIC STATUS COLORS
+     SECTION 6 — SEMANTIC STATUS COLORS
      Use: bg-success, text-warning, bg-danger
   ────────────────────────────────────────── */
 
@@ -159,7 +147,7 @@
   --color-neutral-border: rgba(136, 136, 170, 0.25);
 
   /* ──────────────────────────────────────────
-     SECTION 8 — GRADIENTS
+     SECTION 7 — GRADIENTS
      Use as background-image in CSS when needed.
      Referenced via CSS variable in components.
   ────────────────────────────────────────── */
@@ -177,7 +165,7 @@
   --color-gradient-cool-to: #3dd9a4;
 
   /* ──────────────────────────────────────────
-     SECTION 9 — GLOW / SHADOW COLORS
+     SECTION 8 — GLOW / SHADOW COLORS
      Use: shadow-glow, shadow-pink, shadow-teal
   ────────────────────────────────────────── */
 
@@ -198,11 +186,12 @@
   --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.5);
   --shadow-topbar: 0 1px 0 rgba(255, 255, 255, 0.06);
 
+  --shadow-admin-inpiut: 0 0 0 3px rgba(124, 111, 255, 0.12);
+  /* --shadow-teacher-input: */
   /* ──────────────────────────────────────────
-     SECTION 10 — BORDER RADIUS
+     SECTION 9 — BORDER RADIUS
      Use: rounded-card, rounded-btn, rounded-badge
   ────────────────────────────────────────── */
-
   --radius-card: 14px;
   --radius-card-lg: 18px;
   --radius-card-sm: 10px;
@@ -219,16 +208,16 @@
   --radius-progress: 10px;
 
   /* ──────────────────────────────────────────
-     SECTION 11 — SPACING & LAYOUT
+     SECTION 10 — SPACING & LAYOUT
      Use: w-sidebar, h-topbar
   ────────────────────────────────────────── */
 
-  --spacing-rolecard-h: 370px;
-  --spacing-rolecard-h-md: 400px;
-  --spacing-rolecard-w: 2px;
-  --spacing-rolecard-w-md: 256px;
-  --spacing-loginbox-h: 600px;
-  --spacing-loginbox-w: 500px;
+  --spacing-rolecard-h: 350px;
+  --spacing-rolecard-h-md: 385px;
+  --spacing-rolecard-w: 250px;
+  --spacing-rolecard-w-md: 260px;
+  --spacing-loginbox-h: 530px;
+  --spacing-loginbox-w: 414px;
   --spacing-main-p: 24px;
   --spacing-main-m: 20px;
   --spacing-special-p: 30px;
@@ -245,7 +234,7 @@
   --spacing-grid-gap: 14px;
 
   /* ──────────────────────────────────────────
-     SECTION 12 — TYPOGRAPHY
+     SECTION 11 — TYPOGRAPHY
      Use: font-sans (already Tailwind default),
      or use these as CSS vars in components.
   ────────────────────────────────────────── */
@@ -253,14 +242,16 @@
   --font-sans:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 
-  --font-size-xs: 0.67rem; /* 10.7px — labels, uppercase   */
-  --font-size-sm: 0.72rem; /* 11.5px — captions, meta      */
-  --font-size-base: 0.84rem; /* 13.4px — body text           */
-  --font-size-md: 0.9rem; /* 14.4px — card titles         */
-  --font-size-lg: 1rem; /* 16px   — section headings    */
-  --font-size-xl: 1.15rem; /* 18.4px — page headings       */
-  --font-size-2xl: 1.5rem; /* 24px   — hero numbers        */
-  --font-size-3xl: 1.7rem; /* 27.2px — stat card numbers   */
+  --text-size-xs: 0.67rem; /* 10.7px — labels, uppercase   */
+  --text-size-sm: 0.72rem; /* 11.5px — captions, meta      */
+  --text-size-sm-2: 0.78rem; /* 12.48px */
+  --text-size-base: 0.84rem; /* 13.4px — body text           */
+  --text-size-md: 0.9rem; /* 14.4px — card titles         */
+  --text-size-lg: 1rem; /* 16px   — section headings    */
+  --text-size-xl: 1.15rem; /* 18.4px — page headings       */
+  --text-size-2xl: 1.5rem; /* 24px   — hero numbers        */
+  --text-size-3xl: 1.7rem; /* 27.2px — stat card numbers   */
+  --text-size-4xl: 2.25rem; /* 36px */
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -274,17 +265,19 @@
   --letter-spacing-heading: -0.02em;
   --letter-spacing-stat: -0.04em;
 
+  /* charts */
+
+  --color-tooltip-bg: #1f1f32;
   /* ──────────────────────────────────────────
-     SECTION 13 — TRANSITION & ANIMATION
+     SECTION 12 — TRANSITION & ANIMATION
   ────────────────────────────────────────── */
+  --duration-fast: 0.15s;
+  --duration-base: 0.2s;
+  --duration-slow: 0.35s;
+  --transition-progress: 10s cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-counter: 1.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-  --transition-fast: all 0.15s ease;
-  --transition-base: all 0.2s ease;
-  --transition-slow: all 0.35s ease;
-  --transition-progress: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-counter: 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-  --animate-fade-up: fadeUp 0.35s ease both;
+  --animate-fade-up: fadeUp 0.6s ease both;
   --animate-slide-in: slideIn 0.3s ease both;
 }
 
@@ -299,38 +292,43 @@
      border-[var(--border)]  → current theme border
 ================================================================ */
 
-.dark {
-  --bg: var(--color-dark-bg);
-  --surface: var(--color-dark-surface);
-  --surface-2: var(--color-dark-surface-2);
-  --surface-3: var(--color-dark-surface-3);
-  --surface-4: var(--color-dark-surface-4);
-  --text: var(--color-dark-text);
-  --text-2: var(--color-dark-text-2);
-  --muted: var(--color-dark-muted);
-  --muted-2: var(--color-dark-muted-2);
-  --border: var(--color-dark-border);
-  --border-2: var(--color-dark-border-2);
-  --border-3: var(--color-dark-border-3);
-  --topbar-bg: var(--color-dark-topbar);
-  --overlay: var(--color-dark-overlay);
+:root {
+  --bg: #f0f2f8;
+  --surface: #ffffff;
+  --surface-2: #f5f6fb;
+  --surface-3: #e8eaf4;
+  --surface-4: #dde0ef;
+  --text: #1a1a2e;
+  --text-2: #2e2e48;
+  --muted: #9090b0;
+  --muted-2: #60607a;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-2: rgba(0, 0, 0, 0.14);
+  --border-3: rgba(0, 0, 0, 0.22);
+  --topbar-bg: #fdfdfe;
+  --overlay: rgba(0, 0, 0, 0.5);
 }
 
-:root {
-  --bg: var(--color-light-bg);
-  --surface: var(--color-light-surface);
-  --surface-2: var(--color-light-surface-2);
-  --surface-3: var(--color-light-surface-3);
-  --surface-4: var(--color-light-surface-4);
-  --text: var(--color-light-text);
-  --text-2: var(--color-light-text-2);
-  --muted: var(--color-light-muted);
-  --muted-2: var(--color-light-muted-2);
-  --border: var(--color-light-border);
-  --border-2: var(--color-light-border-2);
-  --border-3: var(--color-light-border-3);
-  --topbar-bg: var(--color-light-topbar);
-  --overlay: var(--color-light-overlay);
+html.dark {
+  --bg: #09090f;
+  --surface: #111119;
+  --surface-2: #18181f;
+  --surface-3: #222230;
+  --surface-4: #2a2a3a;
+  --text: #eeeef5;
+  --text-2: #c8c8d8;
+  --muted: #5a5a7a;
+  --muted-2: #8888aa;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-2: rgba(255, 255, 255, 0.13);
+  --border-3: rgba(255, 255, 255, 0.2);
+  --topbar-bg: rgba(9, 9, 15, 0.88);
+  --overlay: rgba(0, 0, 0, 0.6);
+
+  --admin-bg-hover: #141320;
+  --teacher-bg-hover: #18131c;
+  --student-bg-hover: #12171d;
+  /* color-scheme: dark; */
 }
 
 /* ================================================================
@@ -395,9 +393,10 @@
 ================================================================ */
 
 /* Scrollbar */
-* {
+/* * {
   scrollbar-width: thin;
   scrollbar-color: var(--surface-3) transparent;
+  scrollbar-gutter: stable;
 }
 ::-webkit-scrollbar {
   width: 4px;
@@ -409,7 +408,7 @@
 ::-webkit-scrollbar-thumb {
   background: var(--surface-3);
   border-radius: 10px;
-}
+} */
 
 /* Gradient backgrounds */
 .bg-gradient-brand {
@@ -460,6 +459,12 @@
   -webkit-backdrop-filter: blur(20px);
 }
 
+.glass {
+  transition:
+    background 0.3s ease,
+    backdrop-filter 0.3s ease;
+}
+
 /* Skeleton loading */
 .skeleton {
   background: linear-gradient(
@@ -474,11 +479,13 @@
 }
 
 /* Progress bar fill animations */
-.progress-fill {
-  transition: var(--transition-progress);
-}
 
 /* Stat card counter animation */
 .counter {
   animation: var(--animate-fade-up);
+}
+
+@utility progress-fill {
+  transition: var(--transition-progress) !important;
+  width: var(--percentage, 0%) !important;
 }

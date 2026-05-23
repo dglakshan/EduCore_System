@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 const resultSchema = new mongoose.Schema(
   {
-    Student: {
+    student: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
       required: [true, "Student reference is required"],
     },
 
-    calss: {
+    class: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Class",
       required: [true, "Class reference is required"],
@@ -52,38 +52,30 @@ const resultSchema = new mongoose.Schema(
       default: new Date(),
     },
 
-    marks: [
-      {
-        subjectName: {
-          type: String,
-          required: [true, "Subject Name is required"],
-        },
-        score: {
-          type: Number,
-          required: [true, "Score is required"],
-          min: [0, "Score cannot less than 0"],
-          max: [100, "Score cannot exceed 100"],
-        },
-        gradeValue: {
-          type: String,
-          enum: {
-            values: ["A", "B", "C", "S", "W"],
-            message: "Grade must be A, B, C, S or W",
-          },
-          default: null,
+    mark: {
+      subjectName: {
+        type: String,
+        required: [true, "Subject Name is required"],
+      },
+      score: {
+        type: Number,
+        required: [true, "Score is required"],
+        min: [0, "Score cannot less than 0"],
+        max: [100, "Score cannot exceed 100"],
+      },
+      gradeValue: {
+        type: String,
+        enum: {
+          values: ["A", "B", "C", "S", "W"],
+          message: "Grade must be A, B, C, S or W",
         },
       },
-    ],
-
-    rank: {
-      type: Number,
-      default: null,
     },
 
-    totalMarks: {
-      type: String,
-      default: 0,
-    },
+    // rank: {
+    //   type: Number,
+    //   default: null,
+    // },
 
     assessmentType: {
       type: String,
@@ -124,23 +116,21 @@ resultSchema.index({ class: 1, subject: 1, term: 1 });
 resultSchema.index({ score: -1 });
 resultSchema.index({ isPublished: 1 });
 
-resultSchema.pre("save", function (next) {
-  this.totalMarks = 0;
-  this.marks.forEach((item) => {
-    this.totalMarks += item.score;
-  });
-  next();
-});
+// resultSchema.pre("save", function () {
+//   this.totalMarks = 0;
+//   this.marks.forEach((item) => {
+//     this.totalMarks += item.score;
+//   });
+// });
 
-resultSchema.pre("save", function (next) {
+resultSchema.pre("save", function () {
   if (this.isModified || this.isNew) {
-    if (this.marks.score >= 75) this.marks.gradeValue = "A";
-    else if (this.marks.score >= 65) this.marks.gradeValue = "B";
-    else if (this.marks.score >= 50) this.marks.gradeValue = "C";
-    else if (this.marks.score >= 35) this.marks.gradeValue = "S";
-    else this.marks.gradeValue = "W";
+    if (this.mark.score >= 75) this.mark.gradeValue = "A";
+    else if (this.mark.score >= 65) this.mark.gradeValue = "B";
+    else if (this.mark.score >= 50) this.mark.gradeValue = "C";
+    else if (this.mark.score >= 35) this.mark.gradeValue = "S";
+    else this.mark.gradeValue = "W";
   }
-  next();
 });
 
 resultSchema.virtual("isPassed").get(function () {
@@ -159,24 +149,74 @@ resultSchema.virtual("gradeLebal").get(function () {
   return lebals[this.marks.gradeValue];
 });
 
-resultSchema.static.getStudentAvarage = async function (StudentId, term) {
-  const results = this.find({
-    Student: StudentId,
-    term: term,
-    assessmentType: "exam",
-    isPublished: true,
-  });
+resultSchema.statics.getSubjectAvarageScore = async function ({
+  subjectName,
+  classObjectId,
+}) {
+  const result = await this.aggregate([
+    { $match: { subject: subjectName, class: classObjectId } },
+    {
+      $group: {
+        _id: null,
+        avarageScore: { $avg: "$mark.score" },
+      },
+    },
+  ]);
 
-  if (results.lenght == 0) return 0;
-
-  const total = results.reduce((sum, r) => sum + r.marks.score, 0);
-
-  const average = Math.round((total / results.length) * 10) / 10;
-
-  return average;
+  return result;
 };
 
-resultSchema.static.updateClassRanking = async function ({
+resultSchema.statics.getClassAvarageScore = async function ({
+  classObjectId,
+  term,
+}) {
+  const result = await this.aggregate([
+    {
+      $match: {
+        class: classObjectId,
+        term,
+      },
+    },
+    {
+      $group: {
+        _id: "$subject",
+        subjectAvarage: { $avg: "$mark.score" },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        finalAvarage: { $avg: "$subjectAvarage" },
+      },
+    },
+    {
+      $project: { _id: 0, finalAvarage: 1 },
+    },
+  ]);
+
+  if (result.length === 0) return { finalAvarage: 0 };
+
+  return result[0];
+};
+
+resultSchema.statics.getStudentAvarageScore = async function ({
+  StudentId,
+  term,
+}) {
+  const results = await this.aggregate([
+    { $match: { term: term, StudentId: StudentId } },
+    {
+      $group: {
+        _id: null,
+        studentAvarage: { $avg: "$mark.score" },
+      },
+    },
+  ]);
+
+  return results;
+};
+
+resultSchema.statics.updateClassRanking = async function ({
   className,
   subject,
   term,

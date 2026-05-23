@@ -36,84 +36,170 @@
 //  SECTION 1 — BRAND / LOGO
 // ─────────────────────────────────────────────────────────────
 
-/** EduCore hexagonal logo mark */
-export function LogoIcon({ size = 34, className = "" }) {
-  return (
+export const EduCenterLogo = ({ size = 45, showText = true }) => (
+  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
     <svg
       width={size}
       height={size}
-      viewBox="0 0 34 34"
-      fill="none"
-      className={className}
+      viewBox="136 90 182 200"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ flexShrink: 0 }}
     >
-      <rect width="34" height="34" rx="10" fill="url(#lg1)" />
-      <path
-        d="M17 6L25 10.5V19.5L17 24L9 19.5V10.5L17 6Z"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M17 6V24M9 10.5L25 19.5M25 10.5L9 19.5"
-        stroke="white"
-        strokeWidth="1"
-        strokeOpacity="0.35"
-      />
       <defs>
-        <linearGradient
-          id="lg1"
-          x1="0"
-          y1="0"
-          x2="34"
-          y2="34"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#7c6fff" />
-          <stop offset="1" stopColor="#ff6b8a" />
+        <linearGradient id="capGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#8b85ff" />
+          <stop offset="100%" stopColor="#6c63ff" />
         </linearGradient>
       </defs>
-    </svg>
-  );
-}
 
-/** Compact mark-only version */
-export function LogoMark({ size = 20, className = "" }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-    >
-      <path
-        d="M12 3L20 7.5V16.5L12 21L4 16.5V7.5L12 3Z"
-        stroke="url(#lgm)"
-        strokeWidth="2"
-        strokeLinejoin="round"
+      {/* Book 3 — bottom, pink */}
+      <g transform="translate(136,248)">
+        <rect x="0" y="0" width="128" height="22" rx="3" fill="#ffe6ec" />
+        <rect x="0" y="0" width="16" height="22" rx="3" fill="#ff6584" />
+        <rect x="112" y="0" width="16" height="22" rx="3" fill="#ff6584" />
+      </g>
+
+      {/* Book 2 — middle, teal */}
+      <g transform="translate(142,224)">
+        <rect x="0" y="0" width="116" height="26" rx="3" fill="#e3faf8" />
+        <rect x="0" y="0" width="14" height="26" rx="3" fill="#4ecdc4" />
+        <rect x="102" y="0" width="14" height="26" rx="3" fill="#4ecdc4" />
+      </g>
+
+      {/* Book 1 — top, purple */}
+      <g transform="translate(148,196)">
+        <rect x="0" y="0" width="104" height="30" rx="4" fill="#ede9ff" />
+        <rect x="0" y="0" width="14" height="30" rx="4" fill="#6c63ff" />
+        <rect x="90" y="0" width="14" height="30" rx="4" fill="#6c63ff" />
+        <rect
+          fill="rgba(108,99,255,0.18)"
+          x="22"
+          y="8"
+          width="60"
+          height="3"
+          rx="1.5"
+        />
+        <rect
+          fill="rgba(108,99,255,0.12)"
+          x="22"
+          y="16"
+          width="44"
+          height="3"
+          rx="1.5"
+        />
+      </g>
+
+      {/* Cap base cylinder */}
+      <rect
+        x="152"
+        y="138"
+        width="96"
+        height="14"
+        rx="7"
+        fill="url(#capGrad)"
       />
-      <path
-        d="M12 3V21M4 7.5L20 16.5M20 7.5L4 16.5"
-        stroke="url(#lgm)"
-        strokeWidth="1"
-        strokeOpacity="0.5"
+
+      {/* Cap top diamond */}
+      <polygon points="200,92 256,118 200,136 144,118" fill="url(#capGrad)" />
+
+      {/* Tassel strings */}
+      <line
+        x1="256"
+        y1="118"
+        x2="256"
+        y2="158"
+        stroke="#fdcb6e"
+        strokeWidth="3"
+        strokeLinecap="round"
       />
-      <defs>
-        <linearGradient
-          id="lgm"
-          x1="4"
-          y1="3"
-          x2="20"
-          y2="21"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#7c6fff" />
-          <stop offset="1" stopColor="#ff6b8a" />
-        </linearGradient>
-      </defs>
+      <line
+        x1="256"
+        y1="158"
+        x2="248"
+        y2="174"
+        stroke="#fdcb6e"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      <line
+        x1="256"
+        y1="158"
+        x2="256"
+        y2="175"
+        stroke="#fdcb6e"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      <line
+        x1="256"
+        y1="158"
+        x2="264"
+        y2="174"
+        stroke="#fdcb6e"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+
+      {/* Tassel knot + end balls */}
+      <circle cx="256" cy="158" r="5" fill="#fdcb6e" />
+      <circle cx="248" cy="177" r="3.5" fill="#fdcb6e" />
+      <circle cx="256" cy="178" r="3.5" fill="#fdcb6e" />
+      <circle cx="264" cy="177" r="3.5" fill="#fdcb6e" />
+
+      {/* Cap top button */}
+      <circle cx="200" cy="118" r="5" fill="#ffffff" />
+
+      {/* Stars */}
+      <g transform="translate(118,138) rotate(15)">
+        <polygon
+          points="0,-9 2.1,-3 8.6,-2.8 3.5,1.1 5.3,7.6 0,4 -5.3,7.6 -3.5,1.1 -8.6,-2.8 -2.1,-3"
+          fill="#fdcb6e"
+          opacity="0.85"
+        />
+      </g>
+      <g transform="translate(236,84) rotate(-10)">
+        <polygon
+          points="0,-6 1.4,-2 4.6,-1.9 2.3,0.7 3.5,5.1 0,2.7 -3.5,5.1 -2.3,0.7 -4.6,-1.9 -1.4,-2"
+          fill="#fdcb6e"
+          opacity="0.70"
+        />
+      </g>
+      <g transform="translate(286,210) rotate(5)">
+        <polygon
+          points="0,-7 1.6,-2.3 5.4,-2.2 2.7,0.9 4.1,5.9 0,3.2 -4.1,5.9 -2.7,0.9 -5.4,-2.2 -1.6,-2.3"
+          fill="#fdcb6e"
+          opacity="0.60"
+        />
+      </g>
     </svg>
-  );
-}
+
+    {showText && (
+      <div style={{ lineHeight: 1.2 }}>
+        <div
+          style={{
+            fontWeight: 800,
+            fontSize: "1.05rem",
+            letterSpacing: "-0.02em",
+            color: "var(--text)",
+          }}
+        >
+          Edu<span style={{ color: "#6c63ff" }}>-Center</span>
+        </div>
+        <div
+          style={{
+            fontSize: "0.6rem",
+            letterSpacing: "0.1em",
+            color: "#8892a4",
+            fontWeight: 600,
+            marginTop: 2,
+          }}
+        >
+          EDUCATION MANAGEMENT
+        </div>
+      </div>
+    )}
+  </div>
+);
 
 // ─────────────────────────────────────────────────────────────
 //  SECTION 2 — NAVIGATION (Sidebar)
@@ -3709,7 +3795,7 @@ export function SummaryIcon({
 // ─────────────────────────────────────────────────────────────
 
 export function ShieldIcon({
-  size = 20,
+  size = 12,
   color = "currentColor",
   strokeWidth = 2,
   className = "",

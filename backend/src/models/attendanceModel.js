@@ -21,7 +21,7 @@ const attendanceSchema = new mongoose.Schema(
     },
 
     attendanceDate: {
-      type: Date,
+      type: String,
       required: [true, "Attendance date is required"],
     },
 
@@ -43,10 +43,10 @@ const attendanceSchema = new mongoose.Schema(
       default: "",
     },
 
-    subject: {
-      type: String,
-      default: null,
-    },
+    // subject: {
+    //   type: String,
+    //   default: null,
+    // },
 
     term: {
       type: String,
@@ -65,65 +65,103 @@ const attendanceSchema = new mongoose.Schema(
 
   {
     timestamps: true,
-    versionKey: true,
+    versionKey: false,
   },
 );
 
 attendanceSchema.index(
-  { student: 1, class: 1, attendanceDate },
-  { unique: true, name: student_class_attendanceDate },
+  { student: 1, class: 1, attendanceDate: 1 },
+  { unique: true, name: "student_class_attendanceDate" },
 );
 attendanceSchema.index({ student: 1, term: 1 });
 attendanceSchema.index({ attendanceDate: 1, status: 1 });
 attendanceSchema.index({ markedBy: 1 });
 
-attendanceSchema.static.getDayOverAllAttendanceOfClass = async function (
+attendanceSchema.statics.getDayAllAttendanceOfClass = async function ({
   date,
-  className,
-) {
-  const startOfDay = new Date(date);
-  startOfDay.setHours(0, 0, 0, 0);
-  const endOfDay = new Date(date);
-  endOfDay.setHours(23, 59, 59, 999);
-
-  const result = await this.find({
-    attendanceDate: { $gte: startOfDay, $lte: endOfDay },
-    className,
-  });
-
-  return {
-    present: result.filter((r) => r.status === "P"),
-    absent: result.filter((r) => r.status === "A"),
-    late: result.filter((r) => r.status === "L"),
-    total: result.length,
-  };
-};
-
-attendanceSchema.static.getDayAttendanceOfStudent = async function (
-  studentId,
-  date,
-) {
-  const startOfDay = new Date(date);
-  startOfDay.setHours(0, 0, 0, 0);
-  const endOfDay = new Date(date);
-  endOfDay.setHours(23, 59, 59, 999);
-
-  const result = await this.find({
-    attendanceDate: { $gte: startOfDay, $lte: endOfDay },
-    studentId,
-  });
-
-  if (result.status === "p") {
-    const attendance = result.filter((r) => r.status === "p");
-    return attendance;
-  } else if (result.status === "A") {
-    const attendance = result.filter((r) => r.status === "A");
-    return attendance;
-  } else {
-    const attendance = result.filter((r) => r.status === "L");
-    return attendance;
+  classObjectId,
+}) {
+  try {
+    const result = await this.aggregate([
+      { $match: { attendanceDate: date, class: classObjectId } },
+      {
+        $group: {
+          _id: "$status",
+          attendance: { $sum: 1 },
+        },
+      },
+    ]);
+    return result;
+  } catch (err) {
+    throw err;
   }
 };
 
-const Attendance = mongoose.Model("Attendance", attendanceSchema);
+attendanceSchema.statics.getDayClassPresentCount = async function ({
+  date,
+  classObjectId,
+}) {
+  try {
+    const result = await this.aggregate([
+      { $match: { attendanceDate: date, status: "P", class: classObjectId } },
+      {
+        $group: {
+          _id: null,
+          attendance: { $sum: 1 },
+        },
+      },
+    ]);
+
+    return result.length > 0 ? result[0].attendance : 0;
+  } catch (err) {
+    throw err;
+  }
+};
+
+attendanceSchema.statics.getDayAttendanceAvarageOfClass = async function ({
+  date,
+  classObjectId,
+}) {
+  const result = await this.aggregate([
+    { $match: { attendanceDate: date, class: classObjectId } },
+    {
+      $group: {
+        _id: null,
+        avarageAttendance: {
+          $avg: {
+            $cond: { if: { $eq: ["$status", "P"] }, then: 100, else: 0 },
+          },
+        },
+      },
+    },
+  ]);
+
+  // console.log({ result: result });
+  // console.log(result.length);
+  // const finalResult = (result) => {
+  //   if (result && result.length == 0) return { [date]: 0 };
+
+  //   const finalOut = result.reduce((accumulator, currentValue) => {
+  //     accumulator[date] = currentValue.avarageAttendance;
+  //     return accumulator;
+  //   }, {});
+  //   return finalOut;
+  // };
+
+  return result;
+};
+
+attendanceSchema.statics.getDayAttendanceOfStudent = async function (
+  studentId,
+  date,
+) {
+  const result = await this.aggregate([
+    { $match: { student: studentId, attendanceDate: date } },
+    { $project: { status: 1 } },
+  ]);
+
+  return result;
+};
+
+const Attendance = mongoose.model("Attendance", attendanceSchema);
 export default Attendance;

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Class from "./classModel.js";
 
 const teacherSchema = new mongoose.Schema(
   {
@@ -105,9 +106,10 @@ const teacherSchema = new mongoose.Schema(
       required: [true, "Date of birth is required"],
       validate: {
         validator: function (value) {
+          const enterdDate = new Date(value);
           const nowDate = new Date();
-          nowDate.setFullYear(nowDate.getFullYear - 18);
-          return value >= nowDate;
+          nowDate.setFullYear(nowDate.getFullYear() - 100);
+          return enterdDate >= nowDate;
         },
         message: "Enter valid Date of birth",
       },
@@ -156,14 +158,23 @@ teacherSchema.index({ subject: 1 });
 teacherSchema.index({ employmentType: 1 });
 teacherSchema.index({ status: 1 });
 
-teacherSchema.pre("save", async function (next) {
-  if (!this.teacherId) return next();
+teacherSchema.pre("save", async function () {
+  const studentCount = await Promise.all(
+    this.classes.map(async (item) => {
+      const _class = await Class.findById(item);
+      return _class.students.length;
+    }),
+  );
+
+  this.totalStudent = studentCount.reduce((total, count) => total + count, 0);
+
+  if (this.teacherId) return;
 
   try {
     const count = await mongoose.model("Teacher").countDocuments();
     this.teacherId = `TCH-${String(count + 1).padStart(3, "0")}`;
   } catch (err) {
-    next(err);
+    throw err;
   }
 });
 

@@ -2,55 +2,91 @@ import expressAsyncHandler from "express-async-handler";
 import Result from "../models/resultModel.js";
 import Student from "../models/studentModel.js";
 import Teacher from "../models/teacherModel.js";
+import { STATUS_CODES } from "../utils/constants.js";
+import Class from "../models/classModel.js";
 
-export const resultAdding = expressAsyncHandler(async (req, res, next) => {
+export const resultAdding = expressAsyncHandler(async (req, res) => {
   const {
-    studentId,
-    className,
-    teacherId,
+    student,
     subject,
     term,
-    mark,
+    score,
     assessmentType,
     remarks,
     isPublished,
   } = req.body;
 
-  const isAvalableResult = await Result.findById(studentId);
+  const { _id } = req.user;
+  const isStudentAvalable = await Student.findOne({
+    studentId: student,
+  });
 
-  const isAvalableStudent = await Student.findById(studentId);
-
-  const teacher = await Teacher.findById(teacherId);
-
-  if (!isAvalableStudent)
+  console.log(isStudentAvalable.class);
+  if (!isStudentAvalable)
     return res.status(STATUS_CODES.NOT_FOUND).json({
       success: false,
-      message: `No student found for the given ID: ${studentId}`,
+      message: `No student found for the given ID: ${student}`,
     });
 
-  if (isAvalableResult)
+  const studentObjectId = isStudentAvalable._id;
+
+  const isResultAvalable = await Result.findOne({
+    student: studentObjectId,
+    subject,
+    term,
+    assessmentType,
+  });
+
+  if (isResultAvalable)
     return res
       .status(STATUS_CODES.FORBIDDEN)
       .json({ success: false, message: "Result already added" });
 
-  const newRestlt = await Result.create({
-    student: isAvalableStudent._id,
-    className,
-    enterdBy: teacher._id,
-    subject,
-    term,
-    mark,
-    assessmentType,
-    remarks,
-    isPublished,
-  });
+  try {
+    const newRestlt = await Result.create({
+      student: isStudentAvalable._id,
+      class: isStudentAvalable.class,
+      enteredBy: _id,
+      subject,
+      term,
+      mark: {
+        subjectName: subject,
+        score,
+      },
+      assessmentType,
+      remarks,
+      isPublished,
+    });
 
-  if (!newRestlt)
-    return res
-      .status(STATUS_CODES.SERVER_ERROR)
-      .json({ success: false, message: "Internal server error" });
-
-  res
-    .status(STATUS_CODES.SUCCESS)
-    .json({ success: true, message: "Result added" });
+    console.log(student.class);
+    res
+      .status(STATUS_CODES.SUCCESS)
+      .json({ success: true, message: "Result added" });
+  } catch (err) {
+    res.status(STATUS_CODES.SERVER_ERROR);
+    throw err;
+    return;
+  }
 });
+
+export const avarageScoreOfClasses = expressAsyncHandler(
+  async ({ classesObjectIdsArray, term }) => {
+    const totalAvarage = await Promise.all(
+      classesObjectIdsArray.map(async (item) => {
+        const result = await Result.getClassAvarageScore({
+          classObjectId: item._id,
+          term,
+        });
+
+        return result.finalAvarage;
+      }),
+    ).then(
+      (result) =>
+        Math.round(
+          result.reduce((score, totalScore) => score + totalScore, 0) * 10,
+        ) / 10,
+    );
+
+    return totalAvarage;
+  },
+);

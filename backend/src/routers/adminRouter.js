@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 import {
   adminRegister,
+  deleteUser,
   studentRegister,
   userLogin,
 } from "../controllers/authController.js";
@@ -11,6 +12,7 @@ import {
   updateStudent,
   updateStudentEmil,
 } from "../controllers/studentController.js";
+import { deleteClass } from "../controllers/classController.js";
 // import { adminDashborad } from "../controllers/dashboardController.js";
 
 export const adminRouter = express.Router();
@@ -20,6 +22,8 @@ adminRouter.post("/register", adminRegister);
 adminRouter.post("/login", userLogin);
 
 adminRouter.use(authMiddleware, redirectTo(ROLES.ADMIN));
+
+adminRouter.delete("/deleteclass/:className", deleteClass);
 
 //  adminRouter.get("/admin/viewprofile");
 
@@ -37,12 +41,12 @@ adminRouter.post("/admin/addstudent", studentRegister);
 // adminRouter.get("/admin/viewstudents");
 adminRouter.put("/admin/updatestudent", updateStudent);
 adminRouter.put("/admin/updateStudentEmil", updateStudentEmil);
-// adminRouter.delete("/admin/deletestudent");
+adminRouter.delete("/deletestudent/:email", deleteUser);
 
 // adminRouter.post("/admin/addteacher");
 // adminRouter.get("/admin/viewteachers");
 // adminRouter.put("/admin/updateteacher");
-// adminRouter.delete("/admin/deleteteacher");
+adminRouter.delete("/deleteteacher/:email", deleteUser);
 
 // adminRouter.post("/admin/addnotice");
 // adminRouter.delete("/admin/deletenotice");

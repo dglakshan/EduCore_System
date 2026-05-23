@@ -104,7 +104,3 @@ export const totalStudents = expressAsyncHandler(async (req, res) => {
     .status(STATUS_CODES.SUCCESS)
     .json({ success: true, totalStudents: totalStudents });
 });
-
-// export const teacherOwnStudets = expressAsyncHandler(async()=>{
-//   const students = await
-// })

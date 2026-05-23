@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "http://localhost:3000/api",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
@@ -11,7 +11,7 @@ const api = axios.create({
 
 api.interceptors.response.use(
   (response) => {
-    console.log("Data recived");
+    toast.success(response.data.message);
     return response;
   },
   (error) => {
